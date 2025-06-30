@@ -282,18 +282,7 @@ def analisis_temporal(df):
         fig = px.line(datos_mensuales, x="MONTH_ID", y="SALES", markers=True,
                      title=f"Tendencia Mensual de Ventas para {año_seleccionado}")
         st.plotly_chart(fig, use_container_width=True)
-        
-        if 'ORDERDATE' in df:
-            df['DiaSemana'] = df['ORDERDATE'].dt.day_name()
-            datos_dia = df[df['YEAR_ID'] == año_seleccionado].groupby('DiaSemana')['SALES'].sum().reset_index()
-            
-            orden_dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
-            datos_dia['DiaSemana'] = pd.Categorical(datos_dia['DiaSemana'], categories=orden_dias, ordered=True)
-            datos_dia = datos_dia.sort_values('DiaSemana')
-            
-            fig = px.bar(datos_dia, x="DiaSemana", y="SALES",
-                        title=f"Patrón de Ventas por Día para {año_seleccionado}")
-            st.plotly_chart(fig, use_container_width=True)
+
     else:
         st.warning("Información de fecha no disponible para análisis temporal")
 
